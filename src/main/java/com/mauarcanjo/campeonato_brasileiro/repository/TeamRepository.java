@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
     boolean existsByNameOrAbbreviation (String name, String abbreviation);
-
+    boolean existsByName (String name);
+    boolean existsByAbbreviation(String abbreviation);
     Optional<Team> findByNameOrAbbreviation(String name, String abbreviation);
 }

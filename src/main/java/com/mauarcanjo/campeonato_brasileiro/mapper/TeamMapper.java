@@ -9,8 +9,8 @@ public class TeamMapper {
     public static Team mapToTeam (AddTeamDto teamDto){
         return new Team(null,
                 teamDto.name(),
-                teamDto.abbreviation(),
-                teamDto.state()
+                teamDto.abbreviation().toUpperCase(),
+                teamDto.state().toUpperCase()
         );
     }
 

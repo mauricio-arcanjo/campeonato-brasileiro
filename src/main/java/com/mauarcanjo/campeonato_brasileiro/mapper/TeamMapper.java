@@ -10,7 +10,8 @@ public class TeamMapper {
         return new Team(null,
                 teamDto.name(),
                 teamDto.abbreviation().toUpperCase(),
-                teamDto.state().toUpperCase()
+                teamDto.state().toUpperCase(),
+                teamDto.serie()
         );
     }
 
@@ -19,7 +20,8 @@ public class TeamMapper {
                 team.getId(),
                 team.getName(),
                 team.getAbbreviation(),
-                team.getState()
+                team.getState(),
+                team.getSerie()
         );
     }
 

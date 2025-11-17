@@ -3,6 +3,7 @@ package com.mauarcanjo.campeonato_brasileiro.controller;
 import com.mauarcanjo.campeonato_brasileiro.dto.team.AddTeamDto;
 import com.mauarcanjo.campeonato_brasileiro.dto.team.DetailsTeamDto;
 import com.mauarcanjo.campeonato_brasileiro.dto.team.GetTeamDto;
+import com.mauarcanjo.campeonato_brasileiro.entity.Serie;
 import com.mauarcanjo.campeonato_brasileiro.service.impl.TeamServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,23 +22,19 @@ public class TeamController {
     public ResponseEntity<DetailsTeamDto> addTeam(@RequestBody AddTeamDto addTeamDto){
 
         DetailsTeamDto detailsTeamDto = teamService.addTeam(addTeamDto);
-
         return ResponseEntity.ok(detailsTeamDto);
     }
 
-    @GetMapping
-    public ResponseEntity<DetailsTeamDto> getTeamByNameOrAbbreviation(@RequestBody GetTeamDto getTeamDto){
+    @GetMapping("/{nameOrAbbreviation}")
+    public ResponseEntity<DetailsTeamDto> getTeamByNameOrAbbreviation(@PathVariable("nameOrAbbreviation") String nameOrAbbreviation){
 
-        DetailsTeamDto detailsTeamDto = teamService.getTeam(getTeamDto);
-
+        DetailsTeamDto detailsTeamDto = teamService.getTeam(nameOrAbbreviation);
         return ResponseEntity.ok(detailsTeamDto);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<DetailsTeamDto>> listAllTeams(){
-        return ResponseEntity.ok(
-                teamService.listTeams()
-        );
+    @GetMapping("/all/{serie}")
+    public ResponseEntity<List<DetailsTeamDto>> listAllTeams(@PathVariable("serie") Serie serie){
+        return ResponseEntity.ok( teamService.listTeams(serie));
     }
 
     @PatchMapping("/{id}")
@@ -54,7 +51,5 @@ public class TeamController {
 
         return ResponseEntity.ok("Team successfully deleted!");
     }
-
-
 
 }

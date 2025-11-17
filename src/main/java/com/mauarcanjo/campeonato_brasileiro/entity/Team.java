@@ -24,4 +24,15 @@ public class Team {
 
     private String state;
 
+    @Enumerated(EnumType.STRING)
+    private Serie serie;
+
+    public void relegate(){
+        this.serie = Serie.SERIE_B;
+    }
+
+    public void promote(){
+        this.serie = Serie.SERIE_A;
+    }
+
 }

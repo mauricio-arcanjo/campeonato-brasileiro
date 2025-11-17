@@ -3,6 +3,7 @@ package com.mauarcanjo.campeonato_brasileiro.service.impl;
 import com.mauarcanjo.campeonato_brasileiro.dto.team.AddTeamDto;
 import com.mauarcanjo.campeonato_brasileiro.dto.team.DetailsTeamDto;
 import com.mauarcanjo.campeonato_brasileiro.dto.team.GetTeamDto;
+import com.mauarcanjo.campeonato_brasileiro.entity.Serie;
 import com.mauarcanjo.campeonato_brasileiro.exception.ValidationException;
 import com.mauarcanjo.campeonato_brasileiro.mapper.TeamMapper;
 import com.mauarcanjo.campeonato_brasileiro.entity.Team;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,13 +25,14 @@ public class TeamServiceImpl implements TeamService {
 
     public DetailsTeamDto addTeam(AddTeamDto teamDto) {
 
-        if (teamDto.name() == null || teamDto.abbreviation() == null || teamDto.state() == null){
-            throw new ValidationException("Team name, abbreviation or state can't be null!");
+        if (teamDto.name() == null || teamDto.abbreviation() == null || teamDto.state() == null || teamDto.serie() == null){
+            throw new ValidationException("Team name, abbreviation, state and serie can't be null!");
         }
 
-        long count = teamRepository.count();
+//        long count = teamRepository.count();
+        long count = teamRepository.countBySerie(teamDto.serie());
 
-        if (count <= 20){
+        if (count < 20){
             validateName(teamDto.name());
             validateAbbreviation(teamDto.abbreviation());
             validateState(teamDto.state());
@@ -37,20 +41,25 @@ public class TeamServiceImpl implements TeamService {
             Team savedTeam = teamRepository.save(team);
             return  TeamMapper.mapToDetailsTeamDto(savedTeam);
         } else {
-            throw new ValidationException("Reached maximum quantity of 20 teams!");
+            throw new ValidationException("Reached maximum quantity of 20 teams in " + teamDto.serie() + "!");
         }
     }
 
-    public DetailsTeamDto getTeam(GetTeamDto teamDto) {
+    public DetailsTeamDto getTeam(String nameOrAbbreviation) {
 
-        Team team = teamRepository
-                .findByNameOrAbbreviation(teamDto.name(), teamDto.abbreviation()).orElseThrow();
+        Optional<Team> optional =
+                nameOrAbbreviation.length() == 3
+                    ? teamRepository.findByAbbreviation(nameOrAbbreviation)
+                    : teamRepository.findByName(nameOrAbbreviation);
+
+        Team team = optional.orElseThrow(() ->  new ValidationException("Team not found!"));
 
         return TeamMapper.mapToDetailsTeamDto(team);
     }
 
-    public List<DetailsTeamDto> listTeams(){
-        List<Team> teams = teamRepository.findAll();
+    public List<DetailsTeamDto> listTeams(Serie serie){
+//        List<Team> teams = teamRepository.findAll();
+        List<Team> teams = teamRepository.findAllBySerie(serie);
         return teams.stream()
                 .map(TeamMapper::mapToDetailsTeamDto)
                 .toList();

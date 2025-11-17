@@ -1,0 +1,2 @@
+ALTER TABLE league_table
+ADD COLUMN status VARCHAR(20) NOT NULL;

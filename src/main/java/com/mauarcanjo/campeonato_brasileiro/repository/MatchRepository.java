@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
 
-//    boolean existsByHomeTeamAndVisitorTeam(Team homeTeam, Team visitorTeam);
     boolean existsByHomeTeamAndVisitorTeamAndYearAndSerie(Team homeTeam, Team visitorTeam, int year, Serie serie);
     List<Match> findAllByYear(int year);
-    long countByYear(int year);
+    List<Match> findAllByYearAndSerie(int year, Serie serie);
+    long countByYearAndSerie(int year, Serie serie);
 
 }

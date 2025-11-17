@@ -19,6 +19,9 @@ public class LeagueTable {
     @OneToOne(fetch = FetchType.LAZY)
     private Team team;
 
+    @Enumerated(EnumType.STRING)
+    private Serie serie;
+
     private int year;
     private int numberOfMatches;
     private int goalsScored;
@@ -29,9 +32,13 @@ public class LeagueTable {
     private int loses;
     private int points;
 
-    public LeagueTable(Team team, int year) {
+    @Enumerated(EnumType.STRING)
+    private LeagueStatus status;
+
+    public LeagueTable(Team team, int year, Serie serie) {
         this.id = null;
         this.team = team;
+        this.serie = serie;
         this.year = year;
         this.numberOfMatches = 0;
         this.goalsScored = 0;
@@ -41,6 +48,7 @@ public class LeagueTable {
         this.draws = 0;
         this.loses = 0;
         this.points = 0;
+        this.status = LeagueStatus.IN_PROGRESS;
     }
 
     public void setResult(MatchResults result, int goalsScored, int goalsSuffered) {
@@ -62,5 +70,9 @@ public class LeagueTable {
                 this.loses++;
                 break;
         }
+    }
+
+    public void complete(){
+        this.status = LeagueStatus.COMPLETED;
     }
 }

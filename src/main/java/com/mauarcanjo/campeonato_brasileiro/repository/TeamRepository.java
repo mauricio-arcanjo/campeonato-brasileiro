@@ -11,4 +11,5 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     boolean existsByName (String name);
     boolean existsByAbbreviation(String abbreviation);
     Optional<Team> findByNameOrAbbreviation(String name, String abbreviation);
+    Optional<Team> findByName(String name);
 }

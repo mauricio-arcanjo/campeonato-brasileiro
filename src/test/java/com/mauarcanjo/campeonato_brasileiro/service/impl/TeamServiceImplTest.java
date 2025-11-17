@@ -17,7 +17,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
-public class TeamServiceTest {
+public class TeamServiceImplTest {
 
     @InjectMocks
     private TeamServiceImpl teamService;

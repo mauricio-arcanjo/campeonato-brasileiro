@@ -3,6 +3,7 @@ package com.mauarcanjo.campeonato_brasileiro.controller;
 
 import com.mauarcanjo.campeonato_brasileiro.dto.match.AddMatchDto;
 import com.mauarcanjo.campeonato_brasileiro.dto.match.DetailsMatchDto;
+import com.mauarcanjo.campeonato_brasileiro.entity.Serie;
 import com.mauarcanjo.campeonato_brasileiro.service.impl.MatchServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,10 @@ public class MatchController {
     }
 
     @PostMapping("/sort-remaining/{year}")
-    public ResponseEntity<String> sortAllRemainingMatches(@PathVariable("year") int year){
+    public ResponseEntity<String> sortAllRemainingMatches(@PathVariable("year") int year, @RequestParam("serie")Serie serie){
 
-        matchService.sortAllRemainingMatches(year);
+        System.out.println(serie);
+        matchService.sortAllRemainingMatches(year, serie);
 
         return ResponseEntity.ok("Success!");
     }

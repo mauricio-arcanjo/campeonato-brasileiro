@@ -26,8 +26,10 @@ public class Match {
     private Team visitorTeam;
 
     private int goalsHomeTeam;
-
     private int goalsVisitorTeam;
+
+    @Enumerated(EnumType.STRING)
+    private Serie serie;
 
     private int year;
 }

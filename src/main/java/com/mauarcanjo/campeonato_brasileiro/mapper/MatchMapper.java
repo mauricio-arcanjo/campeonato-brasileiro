@@ -14,6 +14,7 @@ public class MatchMapper {
                 visitorTeam,
                 addMatchDto.goalsHomeTeam(),
                 addMatchDto.goalsVisitorTeam(),
+                addMatchDto.serie(),
                 addMatchDto.year()
         );
     }
@@ -25,6 +26,7 @@ public class MatchMapper {
                 match.getVisitorTeam(),
                 match.getGoalsHomeTeam(),
                 match.getGoalsVisitorTeam(),
+                match.getSerie(),
                 match.getYear()
         );
     }

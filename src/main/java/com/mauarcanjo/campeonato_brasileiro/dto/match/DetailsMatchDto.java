@@ -1,5 +1,6 @@
 package com.mauarcanjo.campeonato_brasileiro.dto.match;
 
+import com.mauarcanjo.campeonato_brasileiro.entity.Serie;
 import com.mauarcanjo.campeonato_brasileiro.entity.Team;
 
 public record DetailsMatchDto(
@@ -8,6 +9,7 @@ public record DetailsMatchDto(
         Team visitorTeam,
         int goalsHomeTeam,
         int goalsVisitorTeam,
+        Serie serie,
         int year
 ) {
 }

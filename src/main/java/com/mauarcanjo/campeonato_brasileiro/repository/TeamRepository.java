@@ -17,4 +17,6 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
 //    Optional<Team> findByNameOrAbbreviation(String name, String abbreviation);
     Optional<Team> findByAbbreviation(String abbreviation);
     Optional<Team> findByName(String name);
+    Optional<Team> findByNameAndSerie(String name, Serie serie);
+    Optional<Team> findByAbbreviationAndSerie(String abbreviation, Serie serie);
 }
